@@ -1,63 +1,110 @@
-# Evilginx-Phishlet
+Evilginx Phishlets and Proxy Services for Sale – High-Value Targets Available
+Video Demo – See It in Action
+To verify the authenticity and functionality of our service, we have provided a video demonstration showcasing:
 
-Take a look here:
+The deployment of Evilginx with one of our premium Phishlets.
+Step-by-step interception of session cookies and bypassing 2FA.
+Real-time access to a test account using the captured session data.
+[https://vimeo.com/1045261825?share=copy[/video]
+[https://vimeo.com/1045260526[/video]
 
-https://streamable.com/vludr6
+Available Packages and Pricing:
+Filestack: $1,000
+Hey: $1,000
+Kolabnow: $1,000
+Mailfence: $1,500
+Mailo: $1,000
+Migadu: $1,000
+Nubo.Coop: $1,000
+Seeweb.it: $1,000
+Siquando-Forum.de: $1,000
+Gmail: $5,000
+Amazon: $1,000
+Facebook: $1,000
+Airbnb: $1,000
+Office 365 (Microsoft Services Only): $1,000
+Outlook: $1,000
+Telegram: $2,000
+We can create Phishlets for any site you want, not just the ones we currently offer.
 
-https://streamable.com/05jqwc
+For more information, please contact us on Telegram:
 
-TELEGRAM:
-https://t.me/@imp3ratorrr
+CONTACT: https://t.me/@imp3ratorrr
 
-Welcome to the Evilginx Imperator House Imperator House serves as a collaborative and educational platform for exploring the powerful capabilities of Evilginx, a modern reverse proxy tool. This repository is designed to assist users in understanding, customizing, and enhancing Evilginx, with a focus on Phishlet creation, software modification, and troubleshooting common issues.
+What’s Included?
+Fully functional Evilginx Phishlets for the listed services.
+Configurations designed to intercept session cookies, bypass 2FA, and hijack accounts.
+Custom modifications available upon request for specific use cases.
+Why Choose Our Service?
+Reliability: Pre-tested and verified Phishlets.
+Customization: Tailored configurations to suit your needs.
+Support: Guidance on setup and deployment to ensure smooth operation.
+Exclusive Access: Services targeting high-value platforms with premium results.
+⚠️ Disclaimer: Ensure all tools and services are used ethically and within legal boundaries. Misuse for illegal purposes is strictly prohibited and punishable by law.
 
-Whether you’re new to Evilginx or an experienced user, Imperator House offers resources and guidance to help you master reverse proxy concepts, develop robust configurations, and tackle advanced use cases.
+What is a Reverse Proxy?
+A reverse proxy is a type of server that sits between clients (e.g., users accessing a website) and the backend servers (e.g., the actual website's server). Instead of clients directly interacting with the backend server, they connect to the reverse proxy, which forwards their requests and then relays responses back to them.
 
-What is Evilginx? Evilginx is an advanced reverse proxy framework designed primarily for penetration testing and security research. It intercepts and manipulates HTTP/HTTPS requests, enabling powerful capabilities such as session hijacking and phishing through man-in-the-middle techniques. Evilginx can bypass multi-factor authentication (MFA) and other advanced security mechanisms, making it a critical tool for security professionals.
+Key Functions of a Reverse Proxy:
+Traffic Distribution: Distributes incoming traffic among multiple backend servers to ensure optimal performance and availability.
+Load Balancing: Prevents overload on a single server by spreading requests.
+Security Enhancement: Hides the backend server’s IP address, providing an additional layer of protection.
+SSL Termination: Manages SSL encryption and decryption to reduce the backend server’s load.
+Caching: Speeds up content delivery by caching frequently accessed content.
+What is Evilginx?
+Evilginx is an advanced reverse proxy tool designed for penetration testing and red team activities. It is particularly useful in testing web application security, especially in areas like authentication and session management.
 
-Originally developed by @kgretzky, Evilginx offers a modular architecture centered around Phishlets, YAML configuration files that define how the proxy interacts with specific web services. Evilginx is ideal for simulating sophisticated attacks in controlled environments to test the resilience of authentication systems and security measures.
+Evilginx is primarily used to perform phishing attacks in a controlled environment. It allows attackers (or testers) to proxy traffic between a victim and a legitimate website, intercepting authentication tokens, session cookies, and other sensitive information.
 
-Why Imperator House? In the current landscape, misinformation and poorly executed materials have flooded the community. Imperator House was created to provide a professional, educational, and collaborative environment where users can:
+Key Features:
+Phishlets: Modular YAML configuration files that define how Evilginx proxies and interacts with specific websites.
+Session Hijacking: Captures session tokens (cookies) to bypass login credentials and gain access to accounts.
+Two-Factor Authentication (2FA) Bypass: Intercepts valid tokens to circumvent 2FA mechanisms like SMS codes or authenticator apps.
+JavaScript Injection: Dynamically injects scripts into proxied pages to modify or capture additional data.
+Evilpuppet Integration: Automates interactions with the website to bypass captchas or perform other actions.
+What Can You Obtain with Evilginx?
+Cookies (Session Hijacking)
 
-Understand Evilginx Concepts: Learn about reverse proxies, session handling, and multi-factor authentication bypass techniques. Develop Phishlets: Create, customize, and troubleshoot YAML configurations tailored to specific services. Collaborate and Innovate: Share insights, solve problems together, and push the boundaries of Evilginx’s capabilities. Our mission is to equip users with the knowledge and tools they need to responsibly and effectively utilize Evilginx.
+Evilginx captures the victim's session cookies when they log in through the proxy.
+What is a session cookie?
 
-Features of Evilginx Session Hijacking Evilginx intercepts authentication tokens during a phishing attack, allowing attackers to bypass MFA without needing the victim’s credentials.
+A session cookie is a piece of data that identifies the user to a website after they log in. It eliminates the need for repeated authentication for subsequent requests.
+Why is it valuable?
 
-Phishlets These YAML-based configuration files define the reverse proxy’s behavior, including URL paths, headers, cookies, and injection scripts. Phishlets are modular, enabling customization for different target services.
+If you have a victim's session cookie, you can impersonate them without knowing their password or 2FA code.
+Bypass Credentials (Phishing)
 
-JavaScript Injection Evilginx supports injecting custom JavaScript into proxied pages, allowing dynamic interactions and automation, such as autofilling forms or manipulating page content.
+How it works: The victim is tricked into entering their username and password on a page served by Evilginx. The tool forwards these credentials to the real website and captures them in transit.
+Impact: An attacker can log in to the victim's account even without their session cookie.
+Two-Factor Authentication (2FA) Bypass
 
-Domain Blacklisting Evilginx can block or redirect specific domains to avoid detection or disrupt unwanted traffic.
+Why 2FA is not foolproof: Even if the victim has 2FA enabled (e.g., SMS or authenticator app codes), Evilginx can capture the session token after the victim completes the 2FA process.
+Since session cookies represent a logged-in state, the attacker does not need the 2FA code anymore.
+Behavioral Insights (Traffic Analysis)
 
-Integration with Puppeteer Evilginx can integrate with Puppeteer for advanced automation, simulating user actions such as completing captchas or submitting forms.
+Evilginx can intercept additional data during the victim's interaction with the proxied website, such as:
+User behavior (e.g., mouse movements, form submissions).
+Browser and device information.
+How Does Evilginx Work?
+Setup:
 
-Session Replay and Debugging The tool captures session data, providing valuable insights for analysis and debugging.
+Evilginx is deployed on a server with a domain configured to act as a reverse proxy.
+A Phishlet is set up for the target website (e.g., "example.com").
+Victim Interaction:
 
-Modularity Evilginx’s architecture allows users to expand functionality with custom modules and scripts.
+The victim receives a phishing link (e.g., "fake-login.example.com") crafted to look like the real website.
+They enter their credentials and, if required, complete 2FA.
+Session Interception:
 
-Getting Started with Evilginx
+Evilginx forwards the victim's login data to the legitimate website, allowing them to log in as usual.
+Simultaneously, Evilginx captures the session cookie and any other relevant authentication tokens.
+Access Granted:
 
-Installation Guide Follow these steps to install Evilginx locally or on a remote server:
-Local Installation: Set up Evilginx on your development machine. Remote Deployment: Install Evilginx on a VPS or cloud server for real-world testing. Dependencies: Install required packages and libraries, including Nginx, OpenSSL, and GoLang. 2. Configuration Set up domain names and DNS records for phishing campaigns. Configure SSL/TLS certificates for secure communications. 3. Quick Start Run your first phishing campaign by deploying a preconfigured Phishlet. Learn how to manage:
+Using the captured cookie, the attacker gains full access to the victim's account without needing a password or 2FA code.
+Payment and Guarantee Terms
+All sales are made on a guarantor basis. The project will be tested on the client's server before any payment is made. Once testing is successfully completed and the client is satisfied, the payment will be processed.
 
-Lures: URLs that victims will visit during an attack. Redirectors: Fallback pages to maintain stealth. Sessions: Captured authentication tokens. Phishlets: The Core of Evilginx Phishlets are the backbone of Evilginx’s functionality. These YAML files control how Evilginx interacts with web services.
+We can create Phishlets for any site you want, not just the ones we currently offer.
+For more information, please contact us on Telegram:
 
-Key Elements of a Phishlet: Triggers: Define domains, paths, and parameters to determine when actions occur. Headers: Specify HTTP/HTTPS headers to pass through the proxy. Cookies: Manage session cookies to maintain stealth. JavaScript Injection (js_inject): Inject scripts into proxied pages to manipulate behavior dynamically.
-
-Example Phishlet Configuration: js_inject:
-
-trigger_domains: ["www.example.com"] trigger_paths: ["/login"] script: | document.querySelector('#username').value = "{email}"; document.querySelector('#password').focus();
-
-Advanced Features
-
-JavaScript Injection Evilginx supports injecting scripts to customize victim interactions. For example, autofill fields or dynamically manipulate page content.
-
-Evilpuppet Integration (For Pro Users) Evilpuppet introduces interactive browser sessions that mimic user behavior to bypass captchas, simulate clicks, and forge tokens.
-
-Example Configuration: evilpuppet: triggers: - domains: ["www.example.com"] actions: - selector: '#email' value: '{username}' - selector: '#password' value: '{password}' click: true interceptors: - token: "session_token" url_re: "/sessions" abort: true 3. Puppeteer Automation Integrate Evilginx with Puppeteer for advanced workflows, including headless browsing, form submissions, and debugging.
-
-Security Best Practices While Evilginx is a powerful tool, it should be used responsibly. Ethical guidelines include:
-
-Using Evilginx solely for educational and penetration testing purposes. Respecting privacy laws and obtaining explicit permission before running tests. Avoiding malicious or illegal activities. Community and Resources Official Documentation: Learn the fundamentals from the Evilginx GitHub repository. Forum Discussions: Engage with experts on technical forums. Imperator House Support: Collaborate with like-minded professionals to overcome challenges and share knowledge. Disclaimer: Imperator House is an educational platform. Any misuse of Evilginx for illegal or malicious purposes is strictly prohibited and punishable under applicable laws. Users are fully responsible for their actions.
-
-Explore, innovate, and master the capabilities of Evilginx responsibly. Welcome to the Imperator House!
+CONTACT: https://t.me/@imp3ratorrr
